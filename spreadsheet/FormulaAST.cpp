@@ -115,14 +115,21 @@ public:
 
     double Evaluate(std::function<double(Position)> args) const override {
         double result;
-        if (type_ == Type::Add) {
-            result = lhs_->Evaluate(args) + rhs_->Evaluate(args);
-        }else if (type_ == Type::Subtract) {
-            result = lhs_->Evaluate(args) - rhs_->Evaluate(args);
-        }else if (type_ == Type::Multiply) {
-            result = lhs_->Evaluate(args) * rhs_->Evaluate(args);
-        } else if (type_ == Type::Divide){
-            result = lhs_->Evaluate(args) / rhs_->Evaluate(args);
+        double lhs = lhs_->Evaluate(args);
+        double rhs = rhs_->Evaluate(args);
+        switch (type_) {
+            case Type::Add:
+                result = lhs + rhs;
+                break;
+            case Type::Subtract:
+                result = lhs - rhs;
+                break;
+            case Type::Multiply:
+                result = lhs * rhs;
+                break;
+            case Type::Divide:
+                result = lhs / rhs;
+                break;
         }
         if (!std::isfinite(result)) {
             throw FormulaError(FormulaError::Category::Arithmetic);
