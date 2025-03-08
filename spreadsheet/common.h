@@ -54,14 +54,15 @@ public:
     }
 
     std::string_view ToString() const {
-        if (category_ == Category::Ref) {
-            return "#REF!";
-        } else if (category_ == Category::Value) {
-            return "#VALUE!";
-        } else if (category_ == Category::Arithmetic) {
-            return "#ARITHM!";
-        } else {
-            return "#UNKNOWN!";
+        switch (category_) {
+            case Category::Ref:
+                return "#REF!";
+            case Category::Value:
+                return "#VALUE!";
+            case Category::Arithmetic:
+                return "#ARITHM!";
+            default:
+                return "#UNKNOWN!";
         }
     }
 
