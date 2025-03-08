@@ -173,13 +173,11 @@ public:
 
     double Evaluate(std::function<double(Position)> args) const override {
         double result;
+        double operand = operand_->Evaluate(args);
         if (type_ == Type::UnaryPlus) {
-            result = operand_->Evaluate(args);
+            result = operand; 
         } else {
-            result = (operand_->Evaluate(args) * (-1)); 
-        }
-        if (!std::isfinite(result)) {
-            throw FormulaError(FormulaError::Category::Arithmetic);
+            result = -operand;
         }
         return result;
     }
